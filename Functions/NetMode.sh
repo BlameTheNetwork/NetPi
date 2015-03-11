@@ -1,7 +1,7 @@
 ###
 ### Call process to Switch Network interface On / Off
 ### Stealth mode being ideal for CDP info without sending a MAC
-### as to not trip any layer 2 security. Call with ./netmode [stealth|active]
+### as to not trip any layer 2 security. Call with ./netmode [stealth|active|pentest]
 ### BlameTheNetwork.com/NetPi
 ###
 #
