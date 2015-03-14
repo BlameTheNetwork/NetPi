@@ -8,6 +8,7 @@
 # Define the CDP Information as a var #
 #######################################
 nic="wlan0"
+dtstamp=$(date +"%m-%d-%Y--%H%M")
 cdpdata=$(sudo cdpr -d $nic | sed 1,4d | sed '/Waiting for CDP
 advertisement:/d' | sed '/transmit CDP packets/d')
 
@@ -24,14 +25,15 @@ type='button' value='New Scan'/></body></html>"
 # Write content to HTML file         #
 ######################################
 _file="/home/pi/Documents/CDP"
-echo "$open" > "$_file/report.html"
-echo "$cdpdata" >> "$_file/report.html"
-echo "$close" >> "$_file/report.html"
+echo "$cdpdata" > "$_file/cdplog-$dtstamp.txt"
+echo "$open" > "$_file/cdpreport.html"
+echo "$cdpdata" >> "$_file/cdpreport.html"
+echo "$close" >> "$_file/cdpreport.html"
 
 #####################################
 #Open output in Dillo. Fastest load #
 #####################################
-dillo -f "$_file/report.html"
+dillo -f "$_file/cdpreport.html"
 ##################################
 # We're done here. -Cave Johnson #
 ##################################
