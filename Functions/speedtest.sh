@@ -7,7 +7,7 @@
 #######################################
 # Define the SpeedTest Output as a var#
 #######################################
-DATE = $(date +"%m/%d/%Y-%H%M")
+dtstamp=$(date +"%m-%d-%Y--%H%M")
 speedtest=$(speedtest-cli | sed 1,2d)
 
 #######################################
@@ -23,13 +23,13 @@ type='button' value='New Scan'/></body></html>"
 # Write content to HTML file         #
 ######################################
 _file="/share/logs/speedtest"
-echo "$lldpdata" > "$_file/speedtestlog-$DATE.txt"
-echo "$open" > "$_file/speedtest.html"
-echo "$lldpdata" >> "$_file/speedtest.html"
-echo "$close" >> "$_file/speedtest.html"
+echo "$lldpdata" > "$_file/speedtestlog-$dtstamp.txt"
+echo "$open" > "$_file/speedtestreport.html"
+echo "$lldpdata" >> "$_file/speedtestreport.html"
+echo "$close" >> "$_file/speedtestreport.html"
 
 #####################################
 #Open output in Dillo. Fastest load #
 #####################################
-dillo -f "$_file/lldpreport.html"
+dillo -f "$_file/speedtestreport.html"
 #####################################
