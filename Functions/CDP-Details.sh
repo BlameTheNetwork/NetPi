@@ -35,5 +35,3 @@ dillo -f "$_file/report.html"
 ##################################
 # We're done here. -Cave Johnson #
 ##################################
-
-Thanks for stopping by. Check back soon for the latest updates. I'll be sure to post again around various sites once I'm complete. Shout out to the Packet Overlords in /r/networking.
