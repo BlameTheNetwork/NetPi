@@ -7,7 +7,7 @@
 #######################################
 # Define the LLDP Information as a var#
 #######################################
-DATE = $(date +"%m/%d/%Y-%H%M")
+DATE = $(date +"%m-%d-%Y--%H%M")
 nic="eth0"
 lldpdata=$(lldpctl $nic)
 
