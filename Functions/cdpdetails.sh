@@ -1,39 +1,53 @@
-###
-### NetPi CDP Information Visual Script
-### Blamethenetwork.com | No license, modify to fit needs
-### Buy me a beer if you learned anything, or like beer.
-###
+##
+## NetPi Internet Speed Test Visual Script
+## Runs on cdpd - developed by MonkeyMental.com
+##
 
 #######################################
-# Define the CDP Information as a var #
+# Define the Output as a var#
 #######################################
-nic="wlan0"
-dtstamp=$(date +"%m-%d-%Y--%H%M")
-cdpdata=$(sudo cdpr -d $nic | sed 1,4d | sed '/Waiting for CDP
-advertisement:/d' | sed '/transmit CDP packets/d')
+echo Waiting for CDP Packet on ETH0
+dtstamp=$(date +"%m-%d-%Y--%H%M%S")
+sudo cdpr -d eth0 -v | tee /share/logs/cdp/report-$dtstamp.txt
+CONTENT=$(sudo cat /share/logs/cdp/report-$dtstamp.txt)
+
 
 #######################################
+
 # HTML Content // Edit to your needs  #
+
 #######################################
-open="<html><head><title>CDP Output</title><style type=text/css>BODY {
+
+open="<html><head><title>CDP Output</title>
+<style type=text/css>BODY {
 color:#FFFFFF; background-color:#000000;
-}</style></head><body><h1>NetPi CDP Details</h1><pre>"
-close="</pre><br/><input type='button' value='Save Report'/><input
-type='button' value='New Scan'/></body></html>"
+}</style></head>
+<body><h1>NetPi CDP Details</h1><pre>"
+
+close="</pre><br/>You may now close this window. The log was saved to the logs directory.</body></html>"
+
 
 ######################################
+
 # Write content to HTML file         #
+
 ######################################
-_file="/home/pi/Documents/CDP"
-echo "$cdpdata" > "$_file/cdplog-$dtstamp.txt"
+
+_file="/share/logs/cdp"
+
 echo "$open" > "$_file/cdpreport.html"
-echo "$cdpdata" >> "$_file/cdpreport.html"
-echo "$close" >> "$_file/cdpreport.html"
+
+echo "$CONTENT" >> "$_file/cdpreport.html"
+
+#echo "$close" >> "$_file/cdpreport.html"
+
 
 #####################################
+
 #Open output in Dillo. Fastest load #
+
 #####################################
-dillo -f "$_file/cdpreport.html"
-##################################
-# We're done here. -Cave Johnson #
-##################################
+chromium-browser --app=file://$_file/cdpreport.html
+#dillo -f "$_file/cdpreport.html"
+
+#####################################
