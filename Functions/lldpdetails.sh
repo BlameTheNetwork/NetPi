@@ -1,36 +1,56 @@
-###
-### NetPi LLDP Information Visual Script
-### Runs on LLDPD | developed by Vincent Bernat
-### vincentbernat.github.io/lldpd/
-###
+##
+## NetPi Internet Speed Test Visual Script
+## Runs on LLDPCTL
+##
 
 #######################################
-# Define the LLDP Information as a var#
+# Define the Output as a var#
 #######################################
-DATE = $(date +"%m-%d-%Y--%H%M")
+echo Working
+dtstamp=$(date +"%m-%d-%Y--%H%M%S")
 nic="eth0"
-lldpdata=$(lldpctl $nic)
+sudo service lldpd restart
+sleep 4
+sudo lldpctl eth0 | tee /share/logs/lldp/report-$dtstamp.txt
+CONTENT=$(cat /share/logs/lldp/report-$dtstamp.txt)
+sudo service lldpd stop
 
 #######################################
+
 # HTML Content // Edit to your needs  #
+
 #######################################
-open="<html><head><title>LLDP Output</title><style type=text/css>BODY {
+
+open="<html><head><title>LLDP Output</title>
+<style type=text/css>BODY {
 color:#FFFFFF; background-color:#000000;
-}</style></head><body><h1>NetPi LLDP Details</h1><pre>"
-close="</pre><br/><input type='button' value='Save Report'/><input
-type='button' value='New Scan'/></body></html>"
+}</style></head>
+<body><h1>NetPi LLDP Details</h1><pre>"
+
+close="</pre><br/>You may now close this window. The log was saved to the logs directory.</body></html>"
+
 
 ######################################
+
 # Write content to HTML file         #
+
 ######################################
-_file="/share/logs"
-echo "$lldpdata" > "$_file/lldplog-$DATE.txt"
+
+_file="/share/logs/lldp"
+
 echo "$open" > "$_file/lldpreport.html"
-echo "$lldpdata" >> "$_file/lldpreport.html"
-echo "$close" >> "$_file/lldpreport.html"
+
+echo "$CONTENT" >> "$_file/lldpreport.html"
+
+#echo "$close" >> "$_file/lldpreport.html"
+
 
 #####################################
+
 #Open output in Dillo. Fastest load #
+
 #####################################
-dillo -f "$_file/lldpreport.html"
+chromium-browser --app=file://$_file/lldpreport.html
+#dillo -f "$_file/lldpreport.html"
+
 #####################################
