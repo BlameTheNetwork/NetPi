@@ -1,0 +1,2 @@
+wpa_gui
+exit
