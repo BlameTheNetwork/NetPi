@@ -6,7 +6,7 @@
 #######################################
 # Define the ifconfig results as a var#
 #######################################
-DATE = $(date +"%m-%d-%Y--%H%M")
+dtstamp=$(date +"%m-%d-%Y--%H%M")
 intdata=$(ifconfig)
 
 #######################################
@@ -22,10 +22,11 @@ type='button' value='New Scan'/></body></html>"
 # Write content to HTML file         #
 ######################################
 _file="/share/logs/interfaces"
-echo "$intdata" > "$_file/intlog-$DATE.txt"
+echo "$intdata" > "$_file/intlog-$dtstamp.txt"
 echo "$open" > "$_file/intreport.html"
 echo "$intdata" >> "$_file/intreport.html"
 echo "$close" >> "$_file/intreport.html"
+echo "$intdata"
 
 #####################################
 #Open output in Dillo. Fastest load #
