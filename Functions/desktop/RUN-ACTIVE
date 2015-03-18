@@ -1,0 +1,3 @@
+/share/scripts/netmode.sh active &
+/share/scripts/controls/active.sh &
+exit
