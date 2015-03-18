@@ -1,0 +1,3 @@
+/share/scripts/netmode.sh pentest &
+/share/scripts/controls/pentest.sh &
+exit
