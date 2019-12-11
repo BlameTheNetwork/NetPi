@@ -31,5 +31,5 @@ echo "$intdata"
 #####################################
 #Open output in Dillo. Fastest load #
 #####################################
-dillo -f "$_file/intpreport.html"
+dillo -f "$_file/intreport.html"
 #####################################
